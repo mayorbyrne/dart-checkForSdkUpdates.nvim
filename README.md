@@ -8,3 +8,7 @@ I couldn't find anything in vim/nvim that would notify me about new Dart SDK rel
 
 - [ ] Windows support
 - [ ] strengthen dart-sdk version detection
+
+
+![image](https://github.com/user-attachments/assets/39ca9324-2faf-45ad-ad5a-457e800eca45)
+
