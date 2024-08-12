@@ -1,4 +1,4 @@
-# dart-sdk-updates.nvim
+# dart-checkForSdkUpdates.nvim
 
 My VSCode friends using dart were being alerted of new releases of the sdk, thanks to the https://dartcode.org/docs/settings/#dartcheckforsdkupdates
 
