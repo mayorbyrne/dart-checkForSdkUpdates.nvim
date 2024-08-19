@@ -13,14 +13,25 @@ local getSDKVersion = function()
     return content
   end
 
-  local dartLocation = io.popen("which dart")
+  local sysname = vim.uv.os_uname().sysname
+  local dartLocation
+
+  -- if windows, use where dart
+  if sysname:find("Windows") and true or false then
+    dartLocation = io.popen("where dart")
+  else
+    dartLocation = io.popen("which dart")
+  end
+
   if dartLocation == nil then
     return nil
   end
 
   local dartPath = dartLocation:read("*a")
 
-  return read_file(vim.trim(dartPath:gsub("/bin/dart", "/version")))
+  -- windows could have \ instead of /, so regex search those
+  -- as well as any characters trailing the word dart (dart.exe) etc
+  return read_file(vim.trim(dartPath:gsub("[\\/]bin[\\/]dart.*", "/version")))
 end
 
 local getLatestSdkVersion = function()
@@ -35,7 +46,7 @@ local getLatestSdkVersion = function()
   h:close()
   local t = vim.json.decode(rawdata)
 
-  return vim.inspect(t.version):gsub("\"", "")
+  return vim.inspect(t.version):gsub('"', "")
 end
 
 M.setup = function()
@@ -49,7 +60,11 @@ M.setup = function()
   local version = vim.trim(currVersion)
 
   if latestVersion ~= version then
-    local message = "Version " .. latestVersion .. " of the Dart SDK is available (you have "..version..")\nhttps://dart.dev/get-dart/archive";
+    local message = "Version "
+        .. latestVersion
+        .. " of the Dart SDK is available (you have "
+        .. version
+        .. ")\nhttps://dart.dev/get-dart/archive"
 
     vim.notify(message, vim.log.levels.WARN)
   end
