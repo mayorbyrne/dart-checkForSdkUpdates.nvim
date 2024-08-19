@@ -29,6 +29,10 @@ local getSDKVersion = function()
 
   local dartPath = dartLocation:read("*a")
 
+  if dartPath:find(".exe") and true or false then
+    dartPath = dartPath:gsub(".exe", "")
+  end
+
   return read_file(vim.trim(dartPath:gsub("/bin/dart", "/version")))
 end
 
