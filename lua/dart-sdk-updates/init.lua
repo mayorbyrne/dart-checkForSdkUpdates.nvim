@@ -29,11 +29,9 @@ local getSDKVersion = function()
 
   local dartPath = dartLocation:read("*a")
 
-  if dartPath:find(".exe") and true or false then
-    dartPath = dartPath:gsub(".exe", "")
-  end
-
-  return read_file(vim.trim(dartPath:gsub("/bin/dart", "/version")))
+  -- windows could have \ instead of /, so regex search those
+  -- as well as any characters trailing the word dart (dart.exe) etc
+  return read_file(vim.trim(dartPath:gsub("[\\/]bin[\\/]dart.*", "/version")))
 end
 
 local getLatestSdkVersion = function()
